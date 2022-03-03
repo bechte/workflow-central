@@ -22,6 +22,7 @@ jobs:
       - uses: nxtlvlsoftware/git-subtree-action@1.1
         with:
           repo: 'bechte/${{ matrix.extension }}'
+          branch: main
           path: 'ext/${{ matrix.extension }}'
           deploy_key: ${{ secrets.DOWNSTREAM_GITHUB_DEPLOY_KEY }}
           force: true # will force push to the downstream repository
