@@ -22,5 +22,5 @@ jobs:
 
       - name: Push subtree changes to ${{ matrix.extension }}
         run: |
-          git subtree push --prefix=ext/${{ matrix.extension }} git@github.com:bechte/${{ matrix.extension }}.git release/${{ env.GITHUB_REF_NAME }}
+          git subtree push --prefix=ext/${{ matrix.extension }} git@github.com:bechte/${{ matrix.extension }}.git release/${{ github.ref_name }}
       
