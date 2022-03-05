@@ -36,4 +36,5 @@ jobs:
         env:
           GIT_SSH_COMMAND: ssh -i ~/.ssh/downstream -o IdentitiesOnly=yes
         run: |
+          git config --unset-all http.https://github.com/.extraheader
           git subtree push --prefix=ext/${{ matrix.extension }} git@github.com:bechte/${{ matrix.extension }}.git release/${{ github.ref_name }}
