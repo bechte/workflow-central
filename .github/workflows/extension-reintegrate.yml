@@ -22,10 +22,10 @@ jobs:
 
       - name: Configure SSH agent
         run: |
-          echo "${{ secrets.DOWNSTREAM_GITHUB_DEPLOY_KEY }}" > ~/.ssh/downstream
+          echo "${{ secrets.DOWNSTREAM_GITHUB_DEPLOY_KEY }}" > /root/.ssh/downstream
 
       - name: Push subtree changes to ${{ matrix.extension }}
         env:
-          GIT_SSH_COMMAND: ssh -i ~/.ssh/downstream -o IdentitiesOnly=yes
+          GIT_SSH_COMMAND: ssh -i /root/.ssh/downstream -o IdentitiesOnly=yes
         run: |
           git subtree push --prefix=ext/${{ matrix.extension }} git@github.com:bechte/${{ matrix.extension }}.git release/${{ github.ref_name }}
