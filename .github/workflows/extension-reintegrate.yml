@@ -20,11 +20,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Configure
-        run: |
-          ssh-keyscan github.com > ~/.ssh/known_hosts
-          echo "${{ secrets.DOWNSTREAM_GITHUB_DEPLOY_KEY }}" > ~/.ssh/subtree_deploy_key
-
       - name: Push subtree changes to ${{ matrix.extension }}
         run: |
           git subtree push --prefix=ext/${{ matrix.extension }} git@github.com:bechte/${{ matrix.extension }}.git release/${{ env.GITHUB_REF_NAME }}
