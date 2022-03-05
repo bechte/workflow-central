@@ -26,6 +26,11 @@ jobs:
           ssh-keyscan github.com > ~/.ssh/known_hosts
           echo "${{ secrets.DOWNSTREAM_GITHUB_DEPLOY_KEY }}" > ~/.ssh/downstream
           chmod 600 ~/.ssh/downstream
+          echo "\
+            Host github.com \
+            HostName github.com \
+            PreferredAuthentications publickey \
+            IdentityFile ~/.ssh/downstream" > ~/.ssh/config
 
       - name: Push subtree changes to ${{ matrix.extension }}
         env:
