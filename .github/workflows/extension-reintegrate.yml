@@ -25,7 +25,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: 'main'
-          ssh-key: '~/.ssh/downstream'
+          ssh-key: 'downstream'
       - name: Push subtree changes to ${{ matrix.extension }}
         run: |
           git subtree push --prefix=ext/${{ matrix.extension }} git@github.com:bechte/${{ matrix.extension }}.git release/${{ github.ref_name }}
