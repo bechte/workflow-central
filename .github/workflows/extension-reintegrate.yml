@@ -16,25 +16,16 @@ jobs:
     name: Update extension ${{ matrix.extension }}
 
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
       - name: Configure SSH agent
         run: |
           mkdir -p ~/.ssh/
-          ssh-keyscan github.com > ~/.ssh/known_hosts
           echo "${{ secrets.DOWNSTREAM_GITHUB_DEPLOY_KEY }}" > ~/.ssh/downstream
           chmod 600 ~/.ssh/downstream
-          echo "\
-            Host github.com \
-            HostName github.com \
-            PreferredAuthentications publickey \
-            IdentityFile ~/.ssh/downstream" > ~/.ssh/config
-
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: 'main'
+          ssh-key: 'downstream'
       - name: Push subtree changes to ${{ matrix.extension }}
-        env:
-          GIT_SSH_COMMAND: ssh -i ~/.ssh/downstream -o IdentitiesOnly=yes
         run: |
-          git config --unset-all http.https://github.com/.extraheader
           git subtree push --prefix=ext/${{ matrix.extension }} git@github.com:bechte/${{ matrix.extension }}.git release/${{ github.ref_name }}
