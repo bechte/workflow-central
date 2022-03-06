@@ -25,4 +25,6 @@ jobs:
         run: |
           git config --global user.name "Stefan Bechtold"
           git config --global user.email "stefan.bechtold@me.com"
-          git subtree push --prefix=ext/${{ matrix.extension }} git@github.com:bechte/${{ matrix.extension }}.git release/${{ github.ref_name }}
+
+          git remote add subtree https://bechte:${{ secrets.BECHTE_PAT }}@github.com/bechte/${{ matrix.extension }}.git
+          git subtree push --prefix=ext/${{ matrix.extension }} subtree release/${{ github.ref_name }}
