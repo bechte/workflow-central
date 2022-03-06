@@ -16,11 +16,13 @@ jobs:
     name: Update extension ${{ matrix.extension }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 0
           ref: 'main'
-          ssh-key: '${{ secrets.DOWNSTREAM_GITHUB_DEPLOY_KEY }}'
+          token: ${{ secrets.BECHTE_PAT }}
       - name: Push subtree changes to ${{ matrix.extension }}
         run: |
+          git config --global user.name "Stefan Bechtold"
+          git config --global user.email "stefan.bechtold@me.com"
           git subtree push --prefix=ext/${{ matrix.extension }} git@github.com:bechte/${{ matrix.extension }}.git release/${{ github.ref_name }}
