@@ -16,16 +16,11 @@ jobs:
     name: Update extension ${{ matrix.extension }}
 
     steps:
-      - name: Configure SSH agent
-        run: |
-          mkdir -p ~/.ssh/
-          echo "${{ secrets.DOWNSTREAM_GITHUB_DEPLOY_KEY }}" > ~/.ssh/downstream
-          chmod 600 ~/.ssh/downstream
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           ref: 'main'
-          ssh-key: 'downstream'
+          ssh-key: '${{ secrets.DOWNSTREAM_GITHUB_DEPLOY_KEY }}'
       - name: Push subtree changes to ${{ matrix.extension }}
         run: |
           git subtree push --prefix=ext/${{ matrix.extension }} git@github.com:bechte/${{ matrix.extension }}.git release/${{ github.ref_name }}
